@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,6 +20,8 @@ body{margin:0;background:#eef5f8;color:#17324d;font-family:Arial,Helvetica,sans-
 .start-card p{margin:0 0 15px;color:#607487}
 .start-btn{border:0;border-radius:12px;background:#0b7a75;color:#fff;padding:14px 18px;font-weight:950;font-size:.9rem;cursor:pointer;width:100%;box-shadow:0 6px 15px rgba(11,122,117,.22)}
 .start-btn:active{transform:translateY(1px)}
+.start-btn:disabled{opacity:.48;filter:grayscale(.3);cursor:not-allowed;box-shadow:none}
+.start-btn:disabled:active{transform:none}
 
 .pulse-notice{margin:14px 0 0;padding:15px 14px;border:2px solid #f2c94c;border-radius:14px;background:linear-gradient(135deg,#fffdf0,#fff6cf);color:#17324d;box-shadow:0 0 0 rgba(242,201,76,.35);animation:noticePulse 1.9s ease-in-out infinite}
 .pulse-notice>strong{display:block;color:#0b6c68;font-size:1.02rem;font-weight:950;letter-spacing:.3px}
@@ -69,13 +72,9 @@ body{margin:0;background:#eef5f8;color:#17324d;font-family:Arial,Helvetica,sans-
 .modal{position:relative;background:#fff;border-radius:20px;padding:22px;box-shadow:0 15px 45px rgba(0,0,0,.25)}
 .close{position:absolute;right:12px;top:8px;border:0;background:transparent;font-size:30px;color:#71808b;cursor:pointer}
 .modal h3{margin:0 32px 12px 0;font-size:1.35rem}
-.safety,.survey{background:#f6fafb;border:1px solid #dce8ed;border-radius:14px;padding:15px;color:#425c6d;font-size:.92rem}
+.safety{background:#f6fafb;border:1px solid #dce8ed;border-radius:14px;padding:15px;color:#425c6d;font-size:.92rem}
 .continue-btn,.send-btn{width:100%;border:0;border-radius:12px;background:#0b7a75;color:#fff;padding:13px 15px;margin-top:13px;font-weight:950;cursor:pointer}
 .continue-btn:disabled,.send-btn:disabled{opacity:.55;cursor:not-allowed}
-.survey p{margin:0 0 11px}
-.survey.note{margin-top:10px;background:#fff8dc;border-color:#f1df9c;color:#5e4a13}
-.check{display:flex;gap:9px;align-items:flex-start;margin-top:13px;font-size:.86rem;font-weight:700}
-.check input{margin-top:3px}
 .choice-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .choice{border:1px solid #dce8ed;border-radius:15px;background:#fff;padding:16px 12px;text-align:center;cursor:pointer;min-height:170px;color:#17324d}
 .choice:hover{border-color:#0b7a75}
@@ -116,10 +115,10 @@ body{margin:0;background:#eef5f8;color:#17324d;font-family:Arial,Helvetica,sans-
 <body>
 <div class="container">
 
-<section class="card start-card">
+  <section class="card start-card">
     <h2>Here’s Your Next Step</h2>
     <p>Welcome, and thank you for finding time to join.</p>
-    <button class="start-btn" id="startBtnTop">CLICK HERE TO START WATCHING THE PRESENTATION</button>
+    <button class="start-btn scheduled-start" id="startBtnTop" type="button">CLICK HERE TO START WATCHING THE PRESENTATION</button>
   </section>
 
   <section class="card hero">
@@ -168,10 +167,10 @@ body{margin:0;background:#eef5f8;color:#17324d;font-family:Arial,Helvetica,sans-
   </section>
 
   <section class="cta-pair" aria-label="Presentation and reservation options">
-    <button class="start-btn" id="startBtnAfterSurvey" type="button">CLICK HERE TO START WATCHING THE PRESENTATION ON ZOOM</button>
+    <button class="start-btn scheduled-start" id="startBtnAfterSurvey" type="button">CLICK HERE TO START WATCHING THE PRESENTATION ON ZOOM</button>
     <button class="reserve-btn" id="reserveBtnAfterSurvey" type="button" disabled>RESERVE YOUR SPOT</button>
   </section>
-  <div class="cta-status" id="ctaStatus" aria-live="polite">Checking presentation availability…</div>
+  <div class="cta-status" id="ctaStatus" aria-live="polite">Checking availability…</div>
 
   <section class="card section">
     <img class="hotel-photo"
@@ -193,7 +192,7 @@ body{margin:0;background:#eef5f8;color:#17324d;font-family:Arial,Helvetica,sans-
   <section class="card start-card">
     <h2>Here’s Your Next Step</h2>
     <p>Welcome, and thank you for finding time to join.</p>
-    <button class="start-btn" id="startBtnBottom">CLICK HERE TO START WATCHING THE PRESENTATION</button>
+    <button class="start-btn scheduled-start" id="startBtnBottom" type="button">CLICK HERE TO START WATCHING THE PRESENTATION</button>
   </section>
 </div>
 
@@ -205,32 +204,20 @@ body{margin:0;background:#eef5f8;color:#17324d;font-family:Arial,Helvetica,sans-
       <div id="safetyStep">
         <h3>Before You Continue</h3>
         <div class="safety"><strong>Please join from a quiet, stationary place.</strong><br><br>For safety, we cannot accommodate participants who are driving or in a moving vehicle.</div>
-        <button class="continue-btn" id="safetyContinue">I UNDERSTAND — CONTINUE</button>
-      </div>
-
-      <div id="surveyStep" style="display:none">
-        <h3>Quick Check-In Survey</h3>
-        <div class="survey">
-          <p>When you join the presentation, you'll be asked to complete a short participant survey. This simply helps us get to know our audience and understand who we're presenting to.</p>
-          <p>Some questions may include your <strong>total household income</strong> and <strong>residency/citizenship</strong>. For household income, please consider the <strong>combined income of everyone</strong> in your household, including yourself, your spouse/partner, or other contributing family members (<strong>ideally $50,000/year</strong>).</p>
-          <p>The survey does not affect your ability to join the presentation. Everyone is welcome to attend!</p>
-          <div class="survey note">Please complete the short check-in when Zoom opens so the host can check you in.</div>
-          <label class="check"><input type="checkbox" id="surveyOk"> <span>I understand the quick check-in survey and am ready to continue.</span></label>
-          <button class="continue-btn" id="surveyContinue" disabled>I UNDERSTAND — CONTINUE</button>
-        </div>
+        <button class="continue-btn" id="safetyContinue" type="button">I UNDERSTAND — CONTINUE</button>
       </div>
 
       <div id="choiceStep" style="display:none">
         <h3>Choose How You’re Connecting</h3>
         <div class="choice-grid">
 
-          <button class="choice" id="mobileChoice">
+          <button class="choice" id="mobileChoice" type="button">
             <div class="choice-icon">📱</div>
             <strong>Mobile Phone</strong>
             <span>Go directly to the presentation.</span>
           </button>
 
-          <button class="choice wide" id="wideChoice">
+          <button class="choice wide" id="wideChoice" type="button">
             <div class="choice-icon">💻</div>
             <strong>Laptop, Desktop or Tablet</strong>
             <span>Best viewing experience.</span>
@@ -249,11 +236,11 @@ body{margin:0;background:#eef5f8;color:#17324d;font-family:Arial,Helvetica,sans-
           <label for="email">Enter your email</label>
           <input id="email" type="email" autocomplete="email" placeholder="you@example.com">
           <div class="email-note">We’ll send the Zoom meeting details to this email.</div>
-          <button class="send-btn" id="sendZoom">SEND ZOOM DETAILS TO MY EMAIL</button>
+          <button class="send-btn" id="sendZoom" type="button">SEND ZOOM DETAILS TO MY EMAIL</button>
           <div class="status" id="status"></div>
         </div>
         <div class="zoom-note"><strong>Check your inbox.</strong> If you do not see it shortly, check spam or junk.</div>
-        <button class="back" id="wideBack">← Back</button>
+        <button class="back" id="wideBack" type="button">← Back</button>
       </div>
 
     </div>
@@ -263,28 +250,49 @@ body{margin:0;background:#eef5f8;color:#17324d;font-family:Arial,Helvetica,sans-
 <script>
 const MOBILE_LINK="https://live.travelaht.com/aht";
 const EMAIL_SCRIPT_URL="https://script.google.com/macros/s/AKfycbwPXYcc6KWOaRs4fRITn5rpHlNw31gCyQIJLzqd96mZnBon6PKnh0GY9UL8_N4MPiUPoA/exec";
+const RESERVATION_URL="https://aloha-hawaii-tours.github.io/spot-reservation/";
 
 const modal=document.getElementById("modal");
 const safety=document.getElementById("safetyStep");
-const survey=document.getElementById("surveyStep");
 const choices=document.getElementById("choiceStep");
 const wide=document.getElementById("wideStep");
 const statusBox=document.getElementById("status");
 
+const scheduledStartButtons=document.querySelectorAll(".scheduled-start");
+const reserveBtnAfterSurvey=document.getElementById("reserveBtnAfterSurvey");
+const ctaStatus=document.getElementById("ctaStatus");
+
+function isPresentationWindowOpen(){
+  const parts=new Intl.DateTimeFormat("en-US",{
+    timeZone:"America/New_York",
+    hour:"2-digit",
+    minute:"2-digit",
+    hourCycle:"h23"
+  }).formatToParts(new Date());
+
+  const hour=Number(parts.find(p=>p.type==="hour").value);
+  const minute=Number(parts.find(p=>p.type==="minute").value);
+  const time=hour*60+minute;
+
+  // Live from 1:45 PM through 8:44 PM Eastern Time.
+  return time>=13*60+45 && time<20*60+45;
+}
+
 function openModal(){
+  // Recheck the schedule in case a page has remained open across the
+  // live-window boundary.
+  if(!isPresentationWindowOpen()){
+    updateScheduleButtons();
+    return;
+  }
+
   safety.style.display="block";
-  survey.style.display="none";
   choices.style.display="none";
   wide.style.display="none";
 
-  const surveyOk=document.getElementById("surveyOk");
-  const surveyContinue=document.getElementById("surveyContinue");
-
-  surveyOk.checked=false;
-  surveyContinue.disabled=true;
-
   statusBox.className="status";
   statusBox.textContent="";
+
   modal.classList.add("open");
   document.body.style.overflow="hidden";
 }
@@ -294,70 +302,61 @@ function closeModal(){
   document.body.style.overflow="";
 }
 
-document.getElementById("startBtnTop").addEventListener("click",openModal);
-document.getElementById("startBtnBottom").addEventListener("click",openModal);
-document.getElementById("closeBtn").addEventListener("click",closeModal);
-
-const startBtnAfterSurvey=document.getElementById("startBtnAfterSurvey");
-const reserveBtnAfterSurvey=document.getElementById("reserveBtnAfterSurvey");
-const ctaStatus=document.getElementById("ctaStatus");
-const RESERVATION_URL="https://aloha-hawaii-tours.github.io/spot-reservation/";
-function isPresentationWindowOpen(){
-  const parts=new Intl.DateTimeFormat("en-US",{
-    timeZone:"America/New_York",hour:"2-digit",minute:"2-digit",hourCycle:"h23"
-  }).formatToParts(new Date());
-  const hour=Number(parts.find(p=>p.type==="hour").value);
-  const minute=Number(parts.find(p=>p.type==="minute").value);
-  const time=hour*60+minute;
-  return time>=13*60+45 && time<=20*60+44;
-}
 function updateScheduleButtons(){
   const open=isPresentationWindowOpen();
-  startBtnAfterSurvey.disabled=!open;
+
+  // Apply the same schedule to every presentation CTA on the page.
+  scheduledStartButtons.forEach(button=>{
+    button.disabled=!open;
+    button.setAttribute("aria-disabled",String(!open));
+    button.title=open
+      ? "Start watching the presentation"
+      : "The presentation is not live at the moment.";
+  });
+
+  // Reservation is available only outside the live presentation window.
   reserveBtnAfterSurvey.disabled=open;
+  reserveBtnAfterSurvey.setAttribute("aria-disabled",String(open));
+
   if(open){
-    startBtnAfterSurvey.textContent="CLICK HERE TO START WATCHING THE PRESENTATION ON ZOOM";
-    reserveBtnAfterSurvey.textContent="RESERVE YOUR SPOT";
-    ctaStatus.textContent="Live presentation is available now. Reservation opens outside the presentation window.";
+    ctaStatus.textContent="The live presentation is available now.";
   }else{
-    startBtnAfterSurvey.textContent="ZOOM PRESENTATION OPENS 1:45 PM–8:44 PM ET";
-    reserveBtnAfterSurvey.textContent="RESERVE YOUR SPOT";
-    ctaStatus.textContent="The live presentation is currently outside its scheduled window. You can reserve your spot now.";
+    ctaStatus.textContent="We aren't live at the moment. Please reserve your spot.";
   }
 }
-startBtnAfterSurvey.addEventListener("click",()=>{
-  if(!isPresentationWindowOpen())return;
-  openModal();
+
+scheduledStartButtons.forEach(button=>{
+  button.addEventListener("click",()=>{
+    if(!isPresentationWindowOpen()){
+      updateScheduleButtons();
+      return;
+    }
+    openModal();
+  });
 });
+
 reserveBtnAfterSurvey.addEventListener("click",()=>{
-  if(isPresentationWindowOpen())return;
+  if(isPresentationWindowOpen()){
+    updateScheduleButtons();
+    return;
+  }
   window.location.href=RESERVATION_URL;
 });
-updateScheduleButtons();
-setInterval(updateScheduleButtons,30000);
+
+document.getElementById("closeBtn").addEventListener("click",closeModal);
 
 modal.addEventListener("click",e=>{
-  if(e.target===modal)closeModal()
+  if(e.target===modal)closeModal();
 });
 
 document.addEventListener("keydown",e=>{
-  if(e.key==="Escape")closeModal()
+  if(e.key==="Escape")closeModal();
 });
 
+// After the safety reminder, go directly to device selection.
+// The duplicate survey step has been removed from the modal flow.
 document.getElementById("safetyContinue").addEventListener("click",()=>{
   safety.style.display="none";
-  survey.style.display="block";
-});
-
-const surveyOk=document.getElementById("surveyOk");
-const surveyContinue=document.getElementById("surveyContinue");
-
-surveyOk.addEventListener("change",()=>{
-  surveyContinue.disabled=!surveyOk.checked;
-});
-
-surveyContinue.addEventListener("click",()=>{
-  survey.style.display="none";
   choices.style.display="block";
 });
 
@@ -416,15 +415,18 @@ document.getElementById("sendZoom").addEventListener("click",async()=>{
     button.textContent="EMAIL SENT";
 
   }catch(error){
-    // The email may have been sent even if the browser cannot read the
-    // Apps Script response (for example, due to cross-origin restrictions).
-    // Avoid showing a misleading failure message in that case.
+    // Preserve the existing behavior when the browser cannot read
+    // the Apps Script response, including cross-origin restrictions.
     statusBox.className="status success";
     statusBox.textContent="Email sent! Please check your inbox or spam/junk folder for the Zoom details.";
     button.disabled=true;
     button.textContent="EMAIL SENT";
   }
 });
+
+// Set the correct state on page load and keep it updated while open.
+updateScheduleButtons();
+setInterval(updateScheduleButtons,10000);
 </script>
 </body>
 </html>
